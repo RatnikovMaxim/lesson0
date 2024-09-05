@@ -8,13 +8,12 @@ class House:
         return (f'Название: {self.name}, кол-во этажей: {self.number_of_floors}')
 
     def go_to(self, new_floor):
-        self.new_floor = new_floor
         for i in range(1, new_floor + 1):
-            if new_floor > self.number_of_floors or new_floor < 1:
+            if 1 < new_floor < self.number_of_floors:
+                print(i)
+            else:
                 print("Такого этажа не существует")
                 break
-            else:
-                print(i)
 
 
 h1 = House('ЖК Эльбрус', 10)
