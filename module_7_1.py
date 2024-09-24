@@ -21,17 +21,18 @@ class Shop:
         return new_product
 
     def add(self, *products):
+        file = open(self.__file_name, 'a')
+
         for i in products:
-            file = open(self.__file_name, 'r')
-            new_product = file.read()
-            file.close()
-            if str(i) in new_product:
+            products_if_file = self.get_products()
+
+            if str(i) in products_if_file:
                 print(f'Продукт {i} уже есть в магазине')
 
             else:
-                file = open(self.__file_name, 'a')
                 file.write(f'\n{i}')
-                file.close()
+
+        file.close()
 
 
 s1 = Shop()
