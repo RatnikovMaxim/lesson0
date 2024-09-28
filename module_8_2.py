@@ -13,7 +13,8 @@ def personal_sum(numbers):
 
 def calculate_average(numbers):
     try:
-        return (personal_sum(numbers)[0] / len(numbers))
+        sum_ = personal_sum(numbers)
+        return sum_[0] / (len(numbers) - sum_[1])
     except ZeroDivisionError:
         return 0
     except TypeError:
