@@ -8,6 +8,8 @@ class Table:
     def __init__(self, number):
         self.number = number
         self.guest = None
+
+
 class Guest(Thread):
     def __init__(self, name):
         super().__init__()
@@ -16,10 +18,13 @@ class Guest(Thread):
     def run(self):
         # sleep(randint(3, 10))
         sleep(0.1)
+
+
 class Cafe:
     def __init__(self, *tables):
         self.queue = Queue()
         self.tables = tables
+
     def guest_arrival(self, *guests):
         for guest in guests:
             for table in self.tables:
@@ -32,21 +37,17 @@ class Cafe:
                 self.queue.put(guest)
                 print(f'{guest.name} в очереди')
 
-
     def discuss_guests(self):
-        for guest in guests:
+        while not (self.queue.empty()) or table.guest is not None:
             for table in self.tables:
-                if not self.queue.empty() or table.guest is not None:
-                    if table.guest is not None and guest.is_alive():
-                        print(f'{guest.name} покушал(-а) и ушел(ушла)')
-                        print(f'Стол номер {table.number} свободен')
-                        table.guest = None
-                        break
-                    if not self.queue.empty() and table.guest is None:
-                        print(f'{guest.name} вышел(-ла) из очереди и сел(-а) за стол номер {table.number}')
-                        guest.start()
-                        table.guest = self.queue.get(guest)
-                        break
+                if not (table.guest is None) and not (table.guest.is_alive()):
+                    print(f'{table.guest.name} покушал(-а) и ушёл(ушла)')
+                    print(f'Стол номер {table.number} свободен')
+                    table.guest = None
+                if not (self.queue.empty()) and table.guest is None:
+                    table.guest = self.queue.get()
+                    print(f'{table.guest.name} вышел из очереди и сел(-а) за стол номер {table.number}')
+                    table.guest.start()
 
 
 # Создание столов
